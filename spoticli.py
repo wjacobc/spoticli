@@ -1,4 +1,5 @@
 import sys
+import os
 import spotipy
 import spotipy.util
 
@@ -11,7 +12,7 @@ scope = 'user-read-playback-state user-modify-playback-state'
 # We either read in the user credentials from a file, or we ask the user
 # for the credentials and optionally write them to save for next time.
 try:
-    credentials_file = open("credentials.txt")
+    credentials_file = open(os.path.join(sys.path[0], 'credentials.txt'))
     username, public_key, private_key = tuple(credentials_file.read().split())
 except FileNotFoundError:
     username = input("Enter your spotify username: ")
