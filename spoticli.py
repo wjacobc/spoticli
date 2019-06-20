@@ -33,10 +33,10 @@ def print_gray(input):
 def help():
     print("Usage: spoticli [command] [arguments]")
     print("Commands:")
-    print("    help      -    displays this message")
-    print("    p         -    plays/pauses current playback")
-    print("    vol [int] -    sets the volume of the active device")
-    print("    np        -    displays the currently playing track, if any")
+    print("    help         -    displays this message")
+    print("    p/play/pause -    plays/pauses current playback")
+    print("    vol [int]    -    sets the volume of the active device")
+    print("    np           -    displays the currently playing track, if any")
 
 
 
@@ -78,12 +78,14 @@ def play_pause(id = None):
     if (current is not None):
         current = sp.current_playback()['is_playing']
     if len(sys.argv) < 3 and id == None:
-        if current:
+        if current and sys.argv[1] != "play":
             sp.pause_playback()
             print("Paused playback on " + get_active_device()['name'])
-        else:
+        elif not current and sys.argv[1] != "pause":
             sp.start_playback()
             print("Started playback on " + get_active_device()['name'])
+        else:
+            print(get_active_device()['name'] + " is already playing")
     elif (id == None):
         search()
     else:
@@ -155,7 +157,7 @@ def search():
 ##
 #
 
-valid_commands = {"np": now_playing, "p": play_pause, "vol": active_volume, "playlists": print_playlists, "s": search,
+valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "vol": active_volume, "playlists": print_playlists, "s": search,
                     "help": help}
 
 
