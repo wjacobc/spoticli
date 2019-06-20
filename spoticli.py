@@ -61,9 +61,9 @@ def active_volume():
     if active_device != None:
         if len(sys.argv) > 2:
             sp.volume(int(sys.argv[2]), active_device['id'])
-            return "Set volume on " + active_device['name'] + " to " + sys.argv[2]
+            print("Set volume on " + active_device['name'] + " to " + sys.argv[2] + "%")
         else:
-            return get_active_device()['volume_percent']
+            print("Volume on " + active_device['name'] + " is " + str(get_active_device()['volume_percent']) + "%")
 
 def now_playing():
     track = sp.current_user_playing_track()
