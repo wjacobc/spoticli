@@ -17,4 +17,26 @@ Requires spotipy, which can be installed using
 
 Which is required to use the most recent features, since the `pip` version of spotipy is outdated.
 
-From there, clone the directory and run using `python spoticli.py`, or alias to whatever you may find useful.
+Once that is installed, clone the repository and run using `python spoticli.py`, or alias to whatever you may find useful.
+
+## Sample Commands
+Display the currently playing track:
+
+```
+$ python spoticli.py np
+Twenty One Pilots - My Blood
+```
+
+Pause playback on the active device:
+
+```
+$ python spoticli.py pause
+Paused playback on jacob-pc
+```
+
+Set active device volume:
+
+```
+$ sp vol 50
+Set volume on jacob-pc to 50%
+```
