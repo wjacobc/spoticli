@@ -90,9 +90,18 @@ def play_pause(id = None):
         search()
     else:
         active_device = get_active_device()
-        print("The id is " + id)
-        id = "spotify:track:" + id
-        sp.start_playback(context_uri = id)
+        if (id[1] == 0):
+            # choice is song
+            id = "spotify:track:" + id[0]
+            print("The id is " + id)
+            # song requires using 'uris' and a list (can be more than one song)
+            sp.start_playback(uris = [id])
+        else:
+            # choice is album
+            id = "spotify:album:" + id[0]
+            print("The id is " + id)
+            # album requires using 'context_uri'
+            sp.start_playback(context_uri = id)
         print("Playback started on " + active_device['name'])
 
 def search():
@@ -124,7 +133,7 @@ def search():
         album_set[track['album']['name']] = (track['album']['id'], track['album']['artists'][0]['name'])
 
         print(index_str + track['name'] + " by " + track['album']['artists'][0]['name'])
-        selection_list.append(track_set[track['name']])
+        selection_list.append([track_set[track['name']],0])
 
         selection_counter += 1
 
@@ -133,7 +142,7 @@ def search():
         index_str = "[" + str(selection_counter) + "] "
         print(index_str + album + " by " + album_set[album][1])
 
-        selection_list.append(album_set[album][1])
+        selection_list.append([album_set[album][0],1])
         selection_counter += 1
 
     to_play_input = input("Enter the index to play, or anything else to cancel\n")
