@@ -27,7 +27,7 @@ sp = spotipy.Spotify(auth = token)
 #sp.trace = True # turn on tracing
 #sp.trace_out = True # turn on trace out
 
-def print_gray(input):
+def print_blue(input):
     print("\033[94m{}\033[00m" .format(input))
 
 def help():
@@ -122,7 +122,7 @@ def search():
 
     selection_list = []
 
-    print_gray("Tracks:")
+    print_blue("Tracks:")
     for num in range(3):
         index_str = "[" + str(selection_counter) + "] "
         track = tracks[num]
@@ -135,7 +135,7 @@ def search():
 
         selection_counter += 1
 
-    print_gray("Albums:")
+    print_blue("Albums:")
     for album in album_set:
         index_str = "[" + str(selection_counter) + "] "
         print(index_str + album + " by " + album_set[album][1])
