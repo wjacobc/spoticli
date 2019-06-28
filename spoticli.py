@@ -93,13 +93,11 @@ def play_pause(id = None):
         if (id[1] == 0):
             # choice is song
             id = "spotify:track:" + id[0]
-            print("The id is " + id)
             # song requires using 'uris' and a list (can be more than one song)
             sp.start_playback(uris = [id])
         else:
             # choice is album
             id = "spotify:album:" + id[0]
-            print("The id is " + id)
             # album requires using 'context_uri'
             sp.start_playback(context_uri = id)
         print("Playback started on " + active_device['name'])
@@ -167,7 +165,7 @@ def search():
 #
 
 valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "vol": active_volume, "playlists": print_playlists, "s": search,
-                    "help": help}
+                    "search": search, "help": help}
 
 
 
