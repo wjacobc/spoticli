@@ -28,7 +28,7 @@ sp = spotipy.Spotify(auth = token)
 #sp.trace_out = True # turn on trace out
 
 def print_gray(input):
-    print("\033[90m{}\033[00m" .format(input))
+    print("\033[94m{}\033[00m" .format(input))
 
 def help():
     print("Usage: spoticli [command] [arguments]")
