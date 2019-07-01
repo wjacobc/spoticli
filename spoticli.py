@@ -39,8 +39,6 @@ def help():
     print("    vol [int]        -    sets the volume of the active device")
     print("    np               -    displays the currently playing track, if any")
 
-
-
 def print_playlists():
     playlists = sp.user_playlists(username)
 
@@ -50,6 +48,10 @@ def print_playlists():
 
 def get_devices():
     return sp.devices()['devices']
+
+def print_devices():
+    for index, device in enumerate(get_devices()):
+        print("[" + str(index) + "] " + device['name'])
 
 def get_active_device():
     device_list = sp.devices()['devices']
