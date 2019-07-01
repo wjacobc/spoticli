@@ -33,10 +33,11 @@ def print_blue(input):
 def help():
     print("Usage: spoticli [command] [arguments]")
     print("Commands:")
-    print("    help         -    displays this message")
-    print("    p/play/pause -    plays/pauses current playback")
-    print("    vol [int]    -    sets the volume of the active device")
-    print("    np           -    displays the currently playing track, if any")
+    print("    help             -    displays this message")
+    print("    p/play/pause     -    plays/pauses current playback")
+    print("    s/search [query] -    searches for the given query")
+    print("    vol [int]        -    sets the volume of the active device")
+    print("    np               -    displays the currently playing track, if any")
 
 
 
