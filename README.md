@@ -5,10 +5,11 @@ Command line utility for controlling Spotify devices
 - Play/pause active device playback locally or remotely using `p`, `play`, or `pause`
 - Set active device volume using `vol`
 - Get output of currently playing track using `np`
-- Search for songs and albums using `search`
+- Search for songs and albums using `search` or `s`
+- Play specific songs or albums using `play query` or by sending the output of a `search`
 
 **In development**:
-- Have searched for tracks and albums start playback using `search` or `play`
+- First-time usage script that sets the device the script is running on for seamless playback start, as well as the option to write Spotify username/developer data to disk rather than having to create a credentials file on your own.
 
 ## Installation
 Requires spotipy, which can be installed using
@@ -37,6 +38,6 @@ Paused playback on jacob-pc
 Set active device volume:
 
 ```
-$ sp vol 50
+$ python spoticli.py vol 50
 Set volume on jacob-pc to 50%
 ```

@@ -27,18 +27,17 @@ sp = spotipy.Spotify(auth = token)
 #sp.trace = True # turn on tracing
 #sp.trace_out = True # turn on trace out
 
-def print_gray(input):
-    print("\033[90m{}\033[00m" .format(input))
+def print_blue(input):
+    print("\033[94m{}\033[00m" .format(input))
 
-def help():
+def print_help():
     print("Usage: spoticli [command] [arguments]")
     print("Commands:")
-    print("    help         -    displays this message")
-    print("    p/play/pause -    plays/pauses current playback")
-    print("    vol [int]    -    sets the volume of the active device")
-    print("    np           -    displays the currently playing track, if any")
-
-
+    print("    help             -    displays this message")
+    print("    p/play/pause     -    plays/pauses current playback")
+    print("    s/search [query] -    searches for the given query")
+    print("    vol [int]        -    sets the volume of the active device")
+    print("    np               -    displays the currently playing track, if any")
 
 def print_playlists():
     playlists = sp.user_playlists(username)
@@ -49,6 +48,10 @@ def print_playlists():
 
 def get_devices():
     return sp.devices()['devices']
+
+def print_devices():
+    for index, device in enumerate(get_devices()):
+        print("[" + str(index) + "] " + device['name'])
 
 def get_active_device():
     device_list = sp.devices()['devices']
@@ -73,6 +76,17 @@ def now_playing():
     else:
         print("Nothing currently playing")
 
+def next_track():
+    track = sp.current_user_playing_track()
+    if (track is not None):
+        sp.next_track()
+        track = sp.current_user_playing_track()
+        if (track is not None):
+            print("Skipped to", end = " ")
+            now_playing()
+    else:
+        print("Nothing currently playing")
+
 def play_pause(id = None):
     current = sp.current_playback()
     if (current is not None):
@@ -93,13 +107,11 @@ def play_pause(id = None):
         if (id[1] == 0):
             # choice is song
             id = "spotify:track:" + id[0]
-            print("The id is " + id)
             # song requires using 'uris' and a list (can be more than one song)
             sp.start_playback(uris = [id])
         else:
             # choice is album
             id = "spotify:album:" + id[0]
-            print("The id is " + id)
             # album requires using 'context_uri'
             sp.start_playback(context_uri = id)
         print("Playback started on " + active_device['name'])
@@ -124,7 +136,7 @@ def search():
 
     selection_list = []
 
-    print_gray("Tracks:")
+    print_blue("Tracks:")
     for num in range(3):
         index_str = "[" + str(selection_counter) + "] "
         track = tracks[num]
@@ -137,7 +149,7 @@ def search():
 
         selection_counter += 1
 
-    print_gray("Albums:")
+    print_blue("Albums:")
     for album in album_set:
         index_str = "[" + str(selection_counter) + "] "
         print(index_str + album + " by " + album_set[album][1])
@@ -166,8 +178,8 @@ def search():
 ##
 #
 
-valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "vol": active_volume, "playlists": print_playlists, "s": search,
-                    "help": help}
+valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "next": next_track, "vol": active_volume, "playlists": print_playlists, "s": search,
+                    "search": search, "help": print_help}
 
 
 
