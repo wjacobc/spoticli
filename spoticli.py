@@ -12,12 +12,14 @@ scope = 'user-read-playback-state user-modify-playback-state'
 # We either read in the user credentials from a file, or we ask the user
 # for the credentials and optionally write them to save for next time.
 try:
-    credentials_file = open(os.path.join(sys.path[0], 'credentials.txt'))
-    username, public_key, private_key = tuple(credentials_file.read().split())
+    with open(os.path.join(sys.path[0], 'credentials.txt')) as credentials_file:
+        username, public_key, private_key = tuple(credentials_file.read().split())
 except FileNotFoundError:
-    username = input("Enter your spotify username: ")
-    public_key = input("Enter the public key of your Spotify application: ")
-    private_key = input("Enter the private key of your Spotify application: ")
+    with open(os.path.join(sys.path[0], 'credentials.txt'), 'a+') as credentials_file:
+        username = input("Enter your spotify username: ")
+        public_key = input("Enter the public key of your Spotify application: ")
+        private_key = input("Enter the private key of your Spotify application: ")
+        credentials_file.write(username + "\n" + public_key + "\n" + private_key)
 
 # This is the authentication token for the API. We use it when we create the Spotify object
 token = spotipy.util.prompt_for_user_token(username, scope, public_key, private_key, 'http://localhost')
