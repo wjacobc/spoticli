@@ -37,6 +37,7 @@ def print_help():
     print("    p/play/pause     -    plays/pauses current playback")
     print("    s/search [query] -    searches for the given query")
     print("    vol [int]        -    sets the volume of the active device")
+    print("    next             -    skips to the next track")
     print("    np               -    displays the currently playing track, if any")
 
 def print_playlists():
