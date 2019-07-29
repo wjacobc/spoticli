@@ -80,8 +80,25 @@ def next_track():
     track = sp.current_user_playing_track()
     if (track is not None):
         sp.next_track()
-        track = sp.current_user_playing_track()
-        if (track is not None):
+        new_track = sp.current_user_playing_track()
+        if (new_track['item'] == track['item']):
+            print("Skipped to end of album or playlist")
+        elif (track is not None):
+            print("Skipped to", end = " ")
+            now_playing()
+    else:
+        print("Nothing currently playing")
+
+def previous_track():
+    track = sp.current_user_playing_track()
+    if (track is not None):
+        try:
+            sp.previous_track()
+        except spotipy.client.SpotifyException:
+            print("No previous track to skip to")
+            return
+        new_track = sp.current_user_playing_track()
+        if (new_track is not None):
             print("Skipped to", end = " ")
             now_playing()
     else:
@@ -178,7 +195,7 @@ def search():
 ##
 #
 
-valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "next": next_track, "vol": active_volume, "playlists": print_playlists, "s": search,
+valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "next": next_track, "previous": previous_track, "vol": active_volume, "playlists": print_playlists, "s": search,
                     "search": search, "help": print_help}
 
 
