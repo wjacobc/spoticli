@@ -30,7 +30,7 @@ sp = spotipy.Spotify(auth = token)
 def print_blue(input):
     print("\033[94m{}\033[00m" .format(input))
 
-def help():
+def print_help():
     print("Usage: spoticli [command] [arguments]")
     print("Commands:")
     print("    help             -    displays this message")
@@ -168,7 +168,7 @@ def search():
 #
 
 valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "vol": active_volume, "playlists": print_playlists, "s": search,
-                    "search": search, "help": help}
+                    "search": search, "help": print_help}
 
 
 
