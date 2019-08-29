@@ -197,15 +197,17 @@ def search():
 ##
 #
 
-valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "next": next_track, "previous": previous_track, "vol": active_volume, "playlists": print_playlists, "s": search,
+if __name__ == "__main__":
+
+    valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "next": next_track, "previous": previous_track, "vol": active_volume, "playlists": print_playlists, "s": search,
                     "search": search, "help": print_help}
 
 
 
-if (len(sys.argv) == 1 or sys.argv[1] not in valid_commands):
-    print("Usage: spoticli [command] [arguments]")
-    print("For a list of commands, run \"help\"")
-else:
-    # Now we execute the method in the corresponding dictionary entry
-    command = sys.argv[1]
-    valid_commands[command]()
+    if (len(sys.argv) == 1 or sys.argv[1] not in valid_commands):
+       print("Usage: spoticli [command] [arguments]")
+       print("For a list of commands, run \"help\"")
+    else:
+       # Now we execute the method in the corresponding dictionary entry
+       command = sys.argv[1]
+       valid_commands[command]()
