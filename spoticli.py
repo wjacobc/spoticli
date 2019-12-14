@@ -35,8 +35,8 @@ def print_help():
     print("Commands:")
     print("    help             -    displays this message")
     print("    p/play/pause     -    plays/pauses current playback")
-    print("    next             -    skips to the next track")
-    print("    previous         -    skips to previous track")
+    print("    n/next           -    skips to the next track")
+    print("    pr/previous      -    skips to previous track")
     print("    s/search [query] -    searches for the given query")
     print("    vol [int]        -    sets the volume of the active device")
     print("    np               -    displays the currently playing track, if any")
@@ -199,8 +199,9 @@ def search():
 
 if __name__ == "__main__":
 
-    valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "next": next_track, "previous": previous_track, "vol": active_volume, "playlists": print_playlists, "s": search,
-                    "search": search, "help": print_help}
+    valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "n": next_track,
+                    "next": next_track, "pr": previous_track, "previous": previous_track, "vol": active_volume,
+                    "playlists": print_playlists, "s": search, "search": search, "help": print_help}
 
 
 
