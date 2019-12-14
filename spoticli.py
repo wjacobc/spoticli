@@ -206,9 +206,12 @@ if __name__ == "__main__":
 
 
     if (len(sys.argv) == 1 or sys.argv[1] not in valid_commands):
-       print("Usage: spoticli [command] [arguments]")
-       print("For a list of commands, run \"help\"")
+        print("Usage: spoticli [command] [arguments]")
+        print("For a list of commands, run \"help\"")
     else:
-       # Now we execute the method in the corresponding dictionary entry
-       command = sys.argv[1]
-       valid_commands[command]()
+        # Now we execute the method in the corresponding dictionary entry
+        command = sys.argv[1]
+        try:
+            valid_commands[command]()
+        except KeyboardInterrupt:
+            sys.exit()
