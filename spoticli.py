@@ -53,7 +53,7 @@ def get_devices():
 
 def print_devices():
     for index, device in enumerate(get_devices()):
-        print("[" + str(index) + "] " + device['name'])
+        print("[" + str(index + 1) + "] " + device['name'])
 
 def get_active_device():
     device_list = sp.devices()['devices']
@@ -151,7 +151,7 @@ def search():
     album_set = {}
     track_set = {}
 
-    selection_counter = 0
+    selection_counter = 1
 
     selection_list = []
 
@@ -178,7 +178,7 @@ def search():
 
     to_play_input = input("Enter the index to play, or anything else to cancel\n")
     try:
-        to_play_index = int(to_play_input)
+        to_play_index = int(to_play_input) - 1
         if (to_play_index >= len(selection_list)):
             print("Invalid index - exiting")
             return
