@@ -35,7 +35,7 @@ def print_help():
     print("Commands:")
     print("    help             -    displays this message")
     print("    p/play/pause     -    plays/pauses current playback")
-    print("    n/next           -    skips to the next track")
+    print("    n/next [int]     -    skips to the next track")
     print("    pr/previous      -    skips to previous track")
     print("    s/search [query] -    searches for the given query")
     print("    vol [int]        -    sets the volume of the active device")
@@ -81,7 +81,11 @@ def now_playing():
 def next_track():
     track = sp.current_user_playing_track()
     if (track is not None):
-        sp.next_track()
+        times_to_skip = 1
+        if len(sys.argv) > 2:
+            times_to_skip = int(sys.argv[2])
+        for num in range(times_to_skip):
+            sp.next_track()
         new_track = sp.current_user_playing_track()
         if (new_track['item'] == track['item']):
             print("Skipped to end of album or playlist")
