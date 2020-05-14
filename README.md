@@ -8,6 +8,7 @@ Command line utility for controlling Spotify devices
 - Search for songs and albums using `search` or `s`
 - Play specific songs or albums using `play query` or by sending the output of a `search`
 - Skip to the next or previous songs using `next` and `previous`
+- Add a song to the play queue using `queue` or `q`
 
 **In development**:
 - First-time usage script that sets the device the script is running on for seamless playback start, as well as the option to write Spotify username/developer data to disk rather than having to create a credentials file on your own.

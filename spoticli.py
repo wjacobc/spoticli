@@ -20,7 +20,7 @@ except FileNotFoundError:
     private_key = input("Enter the private key of your Spotify application: ")
 
 # This is the authentication token for the API. We use it when we create the Spotify object
-token = spotipy.util.prompt_for_user_token(username, scope, public_key, private_key, 'http://localhost')
+token = spotipy.util.prompt_for_user_token(username, scope, public_key, private_key, redirect_uri = 'http://localhost:8080')
 
 sp = spotipy.Spotify(auth = token)
 
@@ -35,6 +35,7 @@ def print_help():
     print("Commands:")
     print("    help             -    displays this message")
     print("    p/play/pause     -    plays/pauses current playback")
+    print("    q/queue          -    adds a track to the play queue")
     print("    n/next [int]     -    skips to the next track")
     print("    pr/previous      -    skips to previous track")
     print("    s/search [query] -    searches for the given query")
@@ -110,11 +111,11 @@ def previous_track():
     else:
         print("Nothing currently playing")
 
-def play_pause(id = None):
+def play_pause():
     current = sp.current_playback()
     if (current is not None):
         current = sp.current_playback()['is_playing']
-    if len(sys.argv) < 3 and id == None:
+    if len(sys.argv) < 3:
         if current and sys.argv[1] != "play":
             sp.pause_playback()
             print("Paused playback on " + get_active_device()['name'])
@@ -123,9 +124,8 @@ def play_pause(id = None):
             print("Started playback on " + get_active_device()['name'])
         else:
             print(get_active_device()['name'] + " is already playing")
-    elif (id == None):
-        search()
     else:
+        id = search()
         active_device = get_active_device()
         if (id[1] == 0):
             # choice is song
@@ -160,7 +160,8 @@ def search():
     selection_list = []
 
     print_blue("Tracks:")
-    for num in range(3):
+    # Get up to 3 songs, but only as many as the search finds if fewer
+    for num in range(min(len(tracks), 3)):
         index_str = "[" + str(selection_counter) + "] "
         track = tracks[num]
         track_set[track['name']] = track['id']
@@ -180,18 +181,20 @@ def search():
         selection_list.append([album_set[album][0],1])
         selection_counter += 1
 
-    to_play_input = input("Enter the index to play, or anything else to cancel\n")
+    selected_input = input("Enter the index to select, or anything else to cancel\n")
     try:
-        to_play_index = int(to_play_input) - 1
-        if (to_play_index >= len(selection_list)):
-            print("Invalid index - exiting")
-            return
-        while (to_play_index > selection_counter or to_play_index < 0):
-            to_play_index = int(input("Invalid index. Enter the index to play, or anything else to cancel\n"))
+        selected_index = int(selected_input) - 1
+        while (selected_index + 1 >= selection_counter or selected_index < 0):
+            selected_index = int(input("Invalid index. Enter the index to play, or anything else to cancel\n"))
 
-        play_pause(selection_list[to_play_index])
+        return selection_list[selected_index]
     except:
-        return
+        exit()
+
+def queue():
+    track_id = search()
+    sp.add_to_queue(track_id[0])
+    print("Added track to queue")
 
 
 
@@ -205,7 +208,8 @@ if __name__ == "__main__":
 
     valid_commands = {"np": now_playing, "p": play_pause, "play": play_pause, "pause": play_pause, "n": next_track,
                     "next": next_track, "pr": previous_track, "previous": previous_track, "vol": active_volume,
-                    "playlists": print_playlists, "s": search, "search": search, "help": print_help}
+                    "playlists": print_playlists, "queue": queue, "q": queue, "s": search, "search": search, "help": print_help,
+                    "h": print_help, "-h": print_help, "--help": print_help}
 
 
 
